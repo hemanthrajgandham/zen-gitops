@@ -21,7 +21,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: notification-service
-          image: 873135413040.dkr.ecr.us-east-1.amazonaws.com/notification-service:sha-a0017b8
+          image: 516209541629.dkr.ecr.us-east-1.amazonaws.com/notification-service:sha-a0017b8
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

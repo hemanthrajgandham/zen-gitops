@@ -47,7 +47,7 @@ CI Pipeline (GitHub Actions / GitLab CI)
     ├─ 3. Test: unit + integration tests
     ├─ 4. Scan: Trivy image scan, SAST
     ├─ 5. Push: docker push → ECR
-    │        873135413040.dkr.ecr.us-east-1.amazonaws.com/auth-service:sha-dbbb634
+    │        516209541629.dkr.ecr.us-east-1.amazonaws.com/auth-service:sha-dbbb634
     │
     └─ 6. Promote: open PR to zen-gitops repo
               Updates: envs/dev/values-auth-service.yaml
@@ -848,7 +848,7 @@ The flow has **5 distinct layers**. Most engineers can explain 2-3; knowing all 
 ESO controller pod (in kube-system)
     │
     ├── Has ServiceAccount: external-secrets (namespace: kube-system)
-    ├── SA has annotation: eks.amazonaws.com/role-arn: arn:aws:iam::873135413040:role/external-secrets-role
+    ├── SA has annotation: eks.amazonaws.com/role-arn: arn:aws:iam::516209541629:role/external-secrets-role
     │
     ├── K8s injects projected ServiceAccount token into ESO pod
     │   (via: automountServiceAccountToken)
@@ -1021,7 +1021,7 @@ Problems:
    This means: "only the 'external-secrets' SA in 'kube-system' can assume this role"
 
 3. SA is annotated:
-   eks.amazonaws.com/role-arn: arn:aws:iam::873135413040:role/external-secrets-role
+   eks.amazonaws.com/role-arn: arn:aws:iam::516209541629:role/external-secrets-role
 ```
 
 **At runtime (every API call):**
@@ -1033,7 +1033,7 @@ ESO pod starts
     │
     └── When ESO calls AWS Secrets Manager:
         1. AWS SDK calls STS AssumeRoleWithWebIdentity(
-             RoleArn: arn:aws:iam::873135413040:role/external-secrets-role,
+             RoleArn: arn:aws:iam::516209541629:role/external-secrets-role,
              WebIdentityToken: <SA JWT>
            )
         2. AWS STS validates JWT signature against OIDC issuer public keys
@@ -1166,7 +1166,7 @@ The secret existed but was empty. Checked the ExternalSecret:
 ```bash
 kubectl describe externalsecret jwt-secret -n prod
 ```
-Status showed: `SecretSyncedError: AccessDenied: User: arn:aws:sts::873135413040:assumed-role/external-secrets-role is not authorized to perform: secretsmanager:GetSecretValue`
+Status showed: `SecretSyncedError: AccessDenied: User: arn:aws:sts::516209541629:assumed-role/external-secrets-role is not authorized to perform: secretsmanager:GetSecretValue`
 
 *T+6 (root cause):* The catalog-service deployment had included a Terraform change that accidentally modified the `external-secrets-role` IAM policy. The policy change removed the `secretsmanager:GetSecretValue` permission for `/pharma/prod/jwt-secret` path.
 
@@ -1468,7 +1468,7 @@ kubectl get pods -n prod
 ```bash
 kubectl describe pod auth-service-7d9f8c-xk2pv -n prod
 # Focus on:
-# - Image: 873135413040.dkr.ecr.us-east-1.amazonaws.com/auth-service:sha-xxx
+# - Image: 516209541629.dkr.ecr.us-east-1.amazonaws.com/auth-service:sha-xxx
 # - Last State: Terminated / Exit Code
 # - Events: OOMKilled? ImagePullBackOff? Liveness failed?
 ```
@@ -1663,7 +1663,7 @@ Common example: a node tainted `node.kubernetes.io/not-ready:NoSchedule` means t
 
 ```bash
 kubectl describe pod auth-service-<hash> -n prod
-# Events: Failed to pull image "873135413040.dkr.ecr.us-east-1.amazonaws.com/auth-service:sha-xxx"
+# Events: Failed to pull image "516209541629.dkr.ecr.us-east-1.amazonaws.com/auth-service:sha-xxx"
 # Check: does imagePullSecrets exist? Is ECR auth working?
 kubectl get secret -n prod | grep ecr
 ```
@@ -2198,8 +2198,8 @@ kubectl logs -n kube-system deployment/external-secrets --since=1h | \
 Status:
   Conditions:
   - Last Transition Time: "2026-05-07T09:00:00Z"
-    Message: 'could not get secret value: AccessDenied: User: arn:aws:sts::873135413040:assumed-role/external-secrets-role/...
-      is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:873135413040:secret:/pharma/prod/db-credentials*'
+    Message: 'could not get secret value: AccessDenied: User: arn:aws:sts::516209541629:assumed-role/external-secrets-role/...
+      is not authorized to perform: secretsmanager:GetSecretValue on resource: arn:aws:secretsmanager:us-east-1:516209541629:secret:/pharma/prod/db-credentials*'
     Reason:      SecretSyncedError
     Status:      "False"
     Type:        Ready
@@ -2438,12 +2438,12 @@ helm upgrade auth-service ./helm-charts -n prod -f envs/prod/values-auth-service
 ```bash
 # 1. What ArgoCD thinks should be deployed
 argocd app get auth-service-prod
-# Look for: Summary → Images: 873135413040.dkr.ecr.us-east-1.amazonaws.com/auth-service:v1.0.0
+# Look for: Summary → Images: 516209541629.dkr.ecr.us-east-1.amazonaws.com/auth-service:v1.0.0
 
 # 2. What the Deployment spec says (desired state)
 kubectl get deployment auth-service -n prod \
   -o jsonpath='{.spec.template.spec.containers[0].image}'
-# 873135413040.dkr.ecr.us-east-1.amazonaws.com/auth-service:v1.0.0
+# 516209541629.dkr.ecr.us-east-1.amazonaws.com/auth-service:v1.0.0
 
 # 3. What is ACTUALLY running in the pod (imageID contains the SHA256 digest)
 kubectl get pods -n prod -l app.kubernetes.io/name=auth-service \

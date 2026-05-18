@@ -21,7 +21,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: supplier-service
-          image: 873135413040.dkr.ecr.us-east-1.amazonaws.com/supplier-service:sha-a0017b8
+          image: 516209541629.dkr.ecr.us-east-1.amazonaws.com/supplier-service:sha-5f9a265
           imagePullPolicy: Always
           ports:
             - containerPort: 8084

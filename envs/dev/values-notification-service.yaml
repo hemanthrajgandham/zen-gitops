@@ -1,8 +1,10 @@
 replicaCount: 1
 fullnameOverride: notification-service
 image:
-  repository: 873135413040.dkr.ecr.us-east-1.amazonaws.com/notification-service
+  repository: 516209541629.dkr.ecr.us-east-1.amazonaws.com/notification-service
   tag: sha-5f9a265
+  repository: 516209541629.dkr.ecr.us-east-1.amazonaws.com/notification-service
+  tag: sha-a0017b8
   pullPolicy: Always
 service:
   type: ClusterIP

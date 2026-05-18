@@ -53,7 +53,7 @@
 2. GitHub Actions CI triggers:
    - mvn test / npm test
    - docker build -t api-gateway:sha-abc123 .
-   - docker push 873135413040.dkr.ecr.us-east-1.amazonaws.com/api-gateway:sha-abc123
+   - docker push 516209541629.dkr.ecr.us-east-1.amazonaws.com/api-gateway:sha-abc123
 
 3. CI bot opens a PR to zen-gitops repo:
    - Changes envs/dev/values-api-gateway.yaml  →  tag: sha-abc123

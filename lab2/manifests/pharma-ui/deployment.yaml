@@ -21,7 +21,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: pharma-ui
-          image: 873135413040.dkr.ecr.us-east-1.amazonaws.com/pharma-ui:sha-66feede
+          image: 516209541629.dkr.ecr.us-east-1.amazonaws.com/pharma-ui:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80

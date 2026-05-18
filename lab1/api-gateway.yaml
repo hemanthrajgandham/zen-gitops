@@ -4,7 +4,7 @@ metadata:
   name: api-gateway
   namespace: dev
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::873135413040:role/pharma-dev-eks-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::516209541629:role/pharma-dev-eks-role
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -48,7 +48,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: pharma-service
-          image: 873135413040.dkr.ecr.us-east-1.amazonaws.com/api-gateway:sha-a0017b8
+          image: 516209541629.dkr.ecr.us-east-1.amazonaws.com/api-gateway:sha-5f9a265
           imagePullPolicy: Always
           ports:
             - name: http
