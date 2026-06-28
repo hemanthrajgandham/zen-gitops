@@ -1,7 +1,7 @@
 replicaCount: 1
 fullnameOverride: auth-service
 image:
-  repository: "${secrets.AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/auth-service"
+  repository: "175546876740.dkr.ecr.us-east-1.amazonaws.com/pharma-dev-auth-service"
   tag: sha-f278e3e
   pullPolicy: Always
 service:
