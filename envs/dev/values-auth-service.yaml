@@ -2,7 +2,7 @@ replicaCount: 1
 fullnameOverride: auth-service
 image:
   repository: "175546876740.dkr.ecr.us-east-1.amazonaws.com/pharma-dev-auth-service"
-  tag: sha-86f594f
+  tag: sha-bfb49a0
   pullPolicy: Always
 service:
   type: ClusterIP
