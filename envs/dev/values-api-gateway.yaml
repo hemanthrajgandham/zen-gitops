@@ -2,7 +2,7 @@ replicaCount: 1
 fullnameOverride: api-gateway
 image:
   repository: 175546876740.dkr.ecr.us-east-1.amazonaws.com/pharma-dev-api-gateway
-  tag: sha-27836ec
+  tag: sha-0f9ef44
   pullPolicy: Always
 service:
   type: ClusterIP
@@ -53,11 +53,12 @@ configmap:
   NOTIFICATION_URL: "http://notification-service:3000"
   QC_SERVICE_URL: "http://qc-service:8086"
   MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info,metrics,prometheus"
-# envFrom:
-#  - secretRef:
+  # envFrom:
+  #  - secretRef:
   #    name: db-credentials
- # - secretRef:
- #     name: jwt-secret
+# - secretRef:
+#     name: jwt-secret
+
 volumeMounts:
   - name: tmp
     mountPath: /tmp
