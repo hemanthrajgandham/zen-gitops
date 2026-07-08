@@ -1,7 +1,7 @@
 replicaCount: 1
 fullnameOverride: api-gateway
 image:
-  repository: 175546876740.dkr.ecr.us-east-1.amazonaws.com/api-gateway
+  repository: 175546876740.dkr.ecr.us-east-1.amazonaws.com/pharma-dev-api-gateway
   tag: sha-27836ec
   pullPolicy: Always
 service:
